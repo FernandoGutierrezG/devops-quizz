@@ -39,7 +39,7 @@ A Bank is planning to launch a new web application, and you need to set up a sca
   - Ensure that the database is set up for high availability and can fail over to a secondary instance in case of an outage.
 
 ### Part 5: Infrastructure as Code (IaC)
-Use **Terraform** or **AWS CloudFormation** to deploy the following infrastructure:
+Use **Terraform** to deploy the following infrastructure:
   - A highly available and redundant network architecture that spans multiple data centers to ensure fault tolerance and resilience.
   - A compute group that can automatically adjust its size based on load, with traffic distributed via a load balancing system.
   - A container-based platform to run the application, with support for scaling.
