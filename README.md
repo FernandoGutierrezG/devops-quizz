@@ -1,13 +1,13 @@
 # Finch Technical Exercise - DevOps Engineer
 
 ## Context
-A Bank is planning to launch a new web application, and you need to set up a scalable, secure, and automated infrastructure in a cloud environment. Your task is to design, implement, and demonstrate an architecture that supports the application in a production environment.
+A Bank is planning to launch a new web application, and you need to set up a scalable, secure, and automated infrastructure in AWS. Your task is to design, implement, and demonstrate an architecture that supports the application in a production environment.
 
 ## Exercise Objectives
 1. Deploy a high-availability architecture for a container-based web application.
 2. Implement automation and CI/CD for the application deployment.
 3. Ensure monitoring and logging of the infrastructure and application.
-4. Ensure that the environment follows cloud security best practices.
+4. Ensure that the environment follows AWS best practices.
 
 ---
 
