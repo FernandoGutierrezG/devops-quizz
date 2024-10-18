@@ -1,76 +1,74 @@
-
 # Finch Technical Exercise - DevOps Engineer
 
-## Context:
-A Bank is planning to launch a new web application, and you need to set up a scalable, secure, and automated infrastructure in AWS. Your task is to design, implement, and demonstrate an architecture that supports the application in a production environment.
+## Context
+A Bank is planning to launch a new web application, and you need to set up a scalable, secure, and automated infrastructure in a cloud environment. Your task is to design, implement, and demonstrate an architecture that supports the application in a production environment.
 
-## Exercise Objectives:
+## Exercise Objectives
 1. Deploy a high-availability architecture for a container-based web application.
 2. Implement automation and CI/CD for the application deployment.
 3. Ensure monitoring and logging of the infrastructure and application.
-4. Ensure that the environment follows AWS security best practices.
+4. Ensure that the environment follows cloud security best practices.
 
 ---
 
-## Exercise Requirements:
+## Exercise Requirements
 
 ### Part 1: Automated Deployment and CI/CD
-- Set up a CI/CD pipeline using **AWS CodePipeline**, **Jenkins**, or **GitLab CI** to:
-  - Automatically deploy the web application to **ECS/EKS** whenever there are code changes.
+- Set up a CI/CD pipeline using any tool or combination of tools to:
+  - Automatically deploy the web application to a container orchestration platform whenever there are code changes.
   - Integrate automated tests to verify the functionality of the application before deploying to production.
-  - Use **AWS CodeBuild** or **Docker** to build container images from the source code.
+  - Use an automated build system to package and create container images from the source code.
 
 ### Part 2: Security
-- Configure **AWS IAM** to follow security best practices:
-  - Create least-privilege policies for instances, users, and AWS services.
-  - Use **AWS Secrets Manager** or **SSM Parameter Store** to securely manage passwords and API keys.
-  - Secure internal communication between services with **Security Groups** and **NACLs**.
-  - Implement **HTTPS** on the load balancer (ALB or ELB) using **ACM (AWS Certificate Manager)** for SSL certificates.
+- Configure user roles, policies, and credentials to follow security best practices:
+  - Create least-privilege access policies for infrastructure resources, users, and services.
+  - Use a secure system to manage sensitive information such as passwords, API keys, and certificates.
+  - Secure internal communication between services through network segmentation, firewalls, or other methods.
+  - Implement HTTPS for secure web traffic and manage SSL certificates accordingly.
 
 ### Part 3: Monitoring and Logging
-- Implement monitoring and logging solutions:
-  - Set up **CloudWatch** to collect performance metrics from EC2 instances, ECS/EKS, and RDS.
-  - Use **CloudTrail** to audit infrastructure changes and track AWS events.
-  - Send application and system logs to **CloudWatch Logs** or use **ELK (Elasticsearch, Logstash, Kibana)** or **AWS OpenSearch** for log aggregation and visualization.
+- Implement a monitoring and logging solution:
+  - Collect performance metrics from your compute instances, container platform, and database.
+  - Set up auditing to track changes to the infrastructure and system events.
+  - Ensure that application and system logs are centralized for analysis and troubleshooting, with a solution for log aggregation and visualization.
 
 ### Part 4: Scalability and High Availability
-- Ensure that the infrastructure can scale automatically:
-  - Configure **Auto Scaling** for EC2 instances based on metrics like CPU or memory usage.
-  - Implement scaling policies in ECS/EKS to increase or decrease the number of instances based on traffic load.
-  - Verify that RDS is set up in Multi-AZ mode to ensure high availability.
+- Ensure that the infrastructure can scale based on demand:
+  - Configure automatic scaling for compute resources based on defined metrics like CPU, memory, or network usage.
+  - Implement scaling policies in the container orchestration platform to adjust the number of application instances based on traffic load.
+  - Ensure that the database is set up for high availability and can fail over to a secondary instance in case of an outage.
 
 ### Part 5: Infrastructure as Code (IaC)
-- Use **Terraform** or **AWS CloudFormation** to deploy the following infrastructure:
-  - **VPC** with at least two public and private subnets in different availability zones.
-  - An **Auto Scaling** group for EC2 with load balancing using **Elastic Load Balancer (ELB)** or **Application Load Balancer (ALB)**.
-  - **ECS (Elastic Container Service)** or **EKS (Elastic Kubernetes Service)** for container orchestration.
-  - An **RDS (Relational Database Service)** using MySQL or PostgreSQL in a private subnet.
-  - **S3** for static file storage or backups.
- 
+- Use an Infrastructure as Code (IaC) tool to deploy the following infrastructure:
+  - A highly available and redundant network architecture that spans multiple data centers to ensure fault tolerance and resilience.
+  - A compute group that can automatically adjust its size based on load, with traffic distributed via a load balancing system.
+  - A container-based platform to run the application, with support for scaling.
+  - A managed database service in a private network segment for security and high availability.
+  - Object storage for static files or backups.
+
 ---
 
-## Deliverables:
+## Deliverables
 
 1. **Git Repository**:
-   - IaC code (Terraform or CloudFormation).
-   - Configuration files for the CI/CD pipeline.
+   - Code for the infrastructure and CI/CD pipeline configuration.
    - Instructions to deploy the infrastructure and application.
 
 2. **Documentation**:
-   - Description of the designed architecture and technical decisions.
-   - Instructions on how to access logs, metrics, and monitoring.
-   - Details about the security practices implemented.
+   - Explanation of the architecture and technical decisions made.
+   - Instructions on how to access and analyze logs, metrics, and monitoring.
+   - Details on how security practices are applied in the environment.
 
 3. **Live Demo**:
-   - Explanation of the infrastructure and deployment.
-   - Tests for scalability and failover.
+   - Presentation of the infrastructure and deployment.
+   - Demonstration of the system’s ability to handle scalability and failover.
    - Show the CI/CD pipeline in action.
 
 ---
 
-## Evaluation Criteria:
-1. **Automation**: Level of automation achieved for deployment and CI/CD.
-2. **Infrastructure**: Correct configuration of the infrastructure with a focus on high availability and scalability.
-3. **Security**: Implementation of AWS security best practices.
-4. **Monitoring**: Configuration of tools to monitor the state of the infrastructure and application.
-5. **Presentation**: Clarity and quality of the documentation and live demo.
+## Evaluation Criteria
+1. **Automation**: How automated the deployment and CI/CD process is.
+2. **Infrastructure**: Correct configuration and best practices for ensuring high availability and scalability.
+3. **Security**: Implementation of security best practices for roles, policies, and network configuration.
+4. **Monitoring**: Proper configuration of monitoring and logging solutions.
+5. **Presentation**: Quality and clarity of documentation and live demo.
