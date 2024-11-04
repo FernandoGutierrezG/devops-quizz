@@ -1,0 +1,29 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/terraform.yml
+
+  build-app:
+    needs: terraform
+    uses: ./.github/workflows/build.yml
+    with:
+      python_version: "3.9"
+
+  test:
+    needs: build-app
+    uses: ./.github/workflows/test-app.yml
+
+  docker:
+    needs: test
+    uses: ./.github/workflows/docker.yml
+    with:
+      image_tag: "python-app:latest"
+
+
