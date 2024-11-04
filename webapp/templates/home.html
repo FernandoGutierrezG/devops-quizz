@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Hero Image styling */
+        .hero-image {
+            background-image: url("{% static 'images/image1.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            min-height: 300px;
+            max-width: 1500px;
+            width: 100%;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+
+        /* Center content */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        /* Button styling */
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        /* Label styling */
+        p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Image Section -->
+    <div class="hero-image"></div>
+
+    <!-- Main Content Section -->
+    <div class="container">
+        <h1>Demo Website!</h1>
+        <p>This is a python web application to increment and view a counter stored in a database.</p>
+
+        <div style="display: flex; gap: 20px; justify-content: center;">
+            <!-- Increment Counter Section -->
+            <div>
+                <form id="increment-form" method="post" action="{% url 'increment_counter' %}">
+                    {% csrf_token %}
+                    <button type="button" id="increment_counter_button">Increment Counter</button>
+                </form>
+                <p>Current Value: <span id="increment_counter_label">{{ counter }}</span></p>
+            </div>
+
+            <!-- Show Counter Value Section -->
+            <div>
+                <form id="show-form" method="get" action="{% url 'get_counter_value' %}">
+                    <button type="button" id="show_counter_value_button">Show Counter Value</button>
+                </form>
+                <p>DB Value: <span id="show_counter_label">{{ counter }}</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Increment Counter Button Click Handler
+        $('#increment_counter_button').on('click', function() {
+            $.ajax({
+                url: "{% url 'increment_counter' %}",
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    // Update the increment counter label
+                    $('#increment_counter_label').text(response.counter);
+                }
+            });
+        });
+
+        // Show Counter Value Button Click Handler
+        $('#show_counter_value_button').on('click', function() {
+            $.ajax({
+                url: "{% url 'get_counter_value' %}",
+                type: "GET",
+                success: function(response) {
+                    // Update the show counter label
+                    $('#show_counter_label').text(response.counter);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
