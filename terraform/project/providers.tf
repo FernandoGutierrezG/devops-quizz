@@ -1,15 +1,15 @@
 # project/providers.tf
 # Fernando Gutierrez
 
-provider "aws" {
-  region = local.aws_region
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 3.32.0"
+    }
+  }
 }
 
-terraform {
-  backend "s3" {
-    bucket  = "bucketname"
-    key     = "terraform.tfstate"
-    region  = "us-east-1"
-    encrypt = true
-  }
+provider "aws" {
+  region = local.aws_region
 }

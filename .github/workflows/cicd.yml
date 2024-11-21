@@ -24,6 +24,6 @@ jobs:
     needs: test
     uses: ./.github/workflows/docker.yml
     with:
-      image_tag: "python-app:latest"
+      image_tag: "python-app"
 
 

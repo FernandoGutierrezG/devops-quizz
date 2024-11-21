@@ -1,0 +1,8 @@
+*.pyc
+db.sqlite3
+
+# Terraform files
+*.terraform
+*terraform.tfstate
+*terraform.tfstate.*
+*terraform.lock.hcl
