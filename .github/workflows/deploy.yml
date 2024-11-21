@@ -1,0 +1,46 @@
+name: Deploy to ECS
+
+on:
+  workflow_call:
+    inputs:
+      image_tag:
+        required: true
+        type: string
+        default: "python-app"
+env:
+  AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ECS }}
+  AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_KEY_ECS }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  ECR_URI: ${{ vars.ECR_REPOSITORY_URI }}
+  ECS_CLUSTER_NAME: ${{ vars.ECS_CLUSTER_NAME }}
+  ECS_SERVICE_NAME: ${{ vars.ECS_SERVICE_NAME }}
+  ECS_FAMILY_NAME: ${{ vars.ECS_FAMILY_NAME }}
+  ECR_URL: "${{ vars.ECR_REPOSITORY_URI }}/${{ vars.ECR_NAME }}"
+  APP_VERSION: ${{ vars.APP_VERSION }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials
+      run: |
+        echo "Logging in to Amazon ECR in region $AWS_REGION with URI $ECR_URI"
+        aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+        aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+        aws configure set region "$AWS_REGION"
+    - name: Deploy to ECS
+      run: |
+        echo "Deploying to ECS..."
+        SHORT_COMMIT_HASH=$(echo $GITHUB_SHA | cut -c1-8)
+        NEW_IMAGE_URI="${ECR_URL}:${APP_VERSION}-${SHORT_COMMIT_HASH}"
+        TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition $ECS_FAMILY_NAME)
+        NEW_TASK_DEFINITION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$NEW_IMAGE_URI" '.taskDefinition | .containerDefinitions[0].image=$IMAGE | del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)')
+        REGISTERED_TASK=$(aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEFINITION")
+        NEW_TASK_DEFINITION_ARN=$(echo $REGISTERED_TASK | jq -r '.taskDefinition.taskDefinitionArn')
+        aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --task-definition $NEW_TASK_DEFINITION_ARN               
+
+    - name: Confirm Deployment
+      run: |
+        echo "Deployment completed"

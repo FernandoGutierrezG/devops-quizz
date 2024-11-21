@@ -9,8 +9,8 @@ on:
         default: "python-app"
 
 env:
-    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ECS }}
-    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_ECS }}
+    AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ECS }}
+    AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_KEY_ECS }}
     ECR_URI: ${{ vars.ECR_REPOSITORY_URI }}
     AWS_REGION: ${{ vars.AWS_REGION }}
     APP_VERSION: ${{ vars.APP_VERSION }}
