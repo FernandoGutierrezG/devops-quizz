@@ -1,0 +1,17 @@
+[
+    {
+      "name": "python-app-container",
+      "image": "058264299414.dkr.ecr.us-east-1.amazonaws.com/python-app-ecr:1.0.1-3e41a163",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 8000,
+          "protocol": "tcp"
+        }
+      ]     
+    }
+  ]
+  

@@ -7,3 +7,4 @@ variable "aws_region" {
 }
 
 variable "ecs_role_name" {}
+

@@ -6,26 +6,30 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    environment: dev
+    defaults:
+      run:
+        shell: bash    
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    # - name: Configure AWS credentials
-    #   uses: aws-actions/configure-aws-credentials@v3
-    #   with:
-    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-    #     aws-region: ${{ vars.AWS_REGION }}
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+        aws-region: ${{ vars.AWS_REGION }}
 
     - name: Terraform Plan
       run: |
           cd terraform/project
-          echo "terraform init"
-          echo "terraform plan"
+          terraform init
+          terraform plan
 
     - name: Terraform Apply
+      if: github.event_name == 'workflow_dispatch'
       run: |
           cd terraform/project
-          ls
-          echo "terraform apply -auto-approve -input=false"
-          
+          echo "terraform apply -auto-approve -input=false "
+
